@@ -1,0 +1,22 @@
+type: theory
+files:
+  - name: src/Main.kt
+    visible: true
+    learner_created: false
+  - name: images/run_dark.svg
+    visible: false
+    learner_created: false
+  - name: images/run.svg
+    visible: false
+    learner_created: false
+  - name: images/edu_editor_dark.png
+    visible: false
+    is_binary: true
+    learner_created: false
+  - name: images/edu_editor.png
+    visible: false
+    is_binary: true
+    learner_created: false
+status: Solved
+record: -1
+post_submission_on_open: true
