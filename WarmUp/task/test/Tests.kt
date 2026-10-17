@@ -1,19 +1,19 @@
-import jetbrains.kotlin.course.warmup.main
-import jetbrains.kotlin.course.warmup.newLineSymbol
+package jetbrains.kotlin.course.warmup
+
 import org.jetbrains.academy.test.system.core.invokeWithArgs
 import org.jetbrains.academy.test.system.core.invokeWithoutArgs
 import org.jetbrains.academy.test.system.core.models.classes.findClassSafe
 import org.junit.jupiter.api.Assertions
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import util.*
 import java.lang.reflect.InvocationTargetException
 
-@HandleNotImplementedError(["countPartialMatches", "countExactMatches"])
+@HandleNotImplementedError(["countPartialMatches"])
 @ExtendWith(HandleNotImplementedErrorExtension::class)
 class Test {
     companion object {
@@ -22,6 +22,25 @@ class Test {
             // guess, secret, expected result
             Arguments.of("ACEB", "BCDF", false),
             Arguments.of("ACEB", "ACEB", true),
+        )
+
+        @JvmStatic
+        fun sequences() = listOf(
+            // guess, secret, positions, letters
+            Arguments.of("ACEB", "BCDF", 1, 1),
+            Arguments.of("ABCD", "ABCD", 4, 0),
+            Arguments.of("ABCD", "DCBA", 0, 4),
+            Arguments.of("ABCD", "DBCA", 2, 2),
+            Arguments.of("ABCD", "EBCF", 2, 0),
+
+            Arguments.of("AAAA", "AAAA", 4, 0),
+            Arguments.of("AAAA", "BBBB", 0, 0),
+            Arguments.of("AABB", "BBAA", 0, 4),
+            Arguments.of("ABCD", "ABBA", 2, 0),
+            Arguments.of("ABBA", "ABCD", 2, 0),
+            Arguments.of("AAAA", "ABBB", 1, 0),
+            Arguments.of("BBBB", "BBDH", 2, 0),
+            Arguments.of("AAAA", "ABCD", 1, 0),
         )
 
         private lateinit var mainClazz: Class<*>
@@ -39,6 +58,21 @@ class Test {
     }
 
     @ParameterizedTest
+    @MethodSource("sequences")
+    fun testCountExactMatchesImplementation(
+        guess: String,
+        secret: String,
+        expectedPosMatchings: Int,
+        expectedLettersMatchings: Int
+    ) {
+        val userMethod = mainClass.findMethod(mainClazz, countExactMatchesMethod)
+        Assertions.assertEquals(
+            expectedPosMatchings, userMethod.invokeWithArgs(secret, guess, clazz = mainClazz),
+            "For secret: $secret and guess: $guess the number of exact matches is $expectedPosMatchings"
+        )
+    }
+
+    @ParameterizedTest
     @MethodSource("inputsToCheck")
     fun testIsCompleteImplementation(
         guess: String,
@@ -50,11 +84,6 @@ class Test {
             expectedResult, userMethod.invokeWithArgs(secret, guess, clazz = mainClazz),
             "For secret: $secret and guess: $guess the function ${isCompleteMethod.name} should return $expectedResult"
         )
-    }
-
-    @Test
-    fun testPlayGameFunction() {
-        mainClass.checkMethod(mainClazz, playGameMethod)
     }
 
     @Test
@@ -75,7 +104,7 @@ class Test {
             val expectedResult = "ABCD"
             Assertions.assertEquals(
                 expectedResult,
-                methodRes,
+                methodRes
             ) { "The method ${generateSecretMethod.name} should always return $expectedResult" }
         } catch (e: InvocationTargetException) {
             assert(false) { "The method ${generateSecretMethod.name} should always return \"ABCD\" now" }
@@ -89,7 +118,7 @@ class Test {
 
     @Test
     fun testCountExactMatchesFunction() {
-        mainClass.checkMethod(mainClazz, countExactMatches)
+        mainClass.checkMethod(mainClazz, countExactMatchesMethod)
     }
 
     @Test
@@ -113,4 +142,9 @@ class Test {
     }
 
     private fun trimOutput(output: String) = output.lines().joinToString(newLineSymbol) { it.trim() }
+
+    @Test
+    fun testPlayGameFunction() {
+        mainClass.checkMethod(mainClazz, playGameMethod)
+    }
 }
