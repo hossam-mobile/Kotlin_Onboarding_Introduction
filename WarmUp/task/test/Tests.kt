@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import util.*
 import java.lang.reflect.InvocationTargetException
 
-@HandleNotImplementedError(["countPartialMatches"])
+@HandleNotImplementedError
 @ExtendWith(HandleNotImplementedErrorExtension::class)
 class Test {
     companion object {
@@ -55,6 +55,19 @@ class Test {
     @Test
     fun smokeTest() {
         runMainFunction(::main, "ABCD$newLineSymbol")
+    }
+
+    @ParameterizedTest
+    @MethodSource("sequences")
+    fun testCountPartialMatchesImplementation(
+        guess: String,
+        secret: String,
+        expectedPosMatchings: Int,
+        expectedLettersMatchings: Int
+    ) {
+        val userMethod = mainClass.findMethod(mainClazz, countPartialMatchesMethod)
+        Assertions.assertEquals(expectedLettersMatchings, userMethod.invokeWithArgs(secret, guess, clazz = mainClazz),
+            "For secret: $secret and guess: $guess the number of letters matchings is $expectedLettersMatchings")
     }
 
     @Test

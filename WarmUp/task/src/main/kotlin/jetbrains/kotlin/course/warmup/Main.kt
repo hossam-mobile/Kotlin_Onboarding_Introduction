@@ -21,6 +21,13 @@ fun countPartialMatches(secret: String, guess: String): Int = TODO("Not implemen
 
 fun countExactMatches(secret: String, guess: String): Int = secret.filterIndexed { index, symbol ->  guess[index] == symbol}.length
 
+fun countAllMatches(secret: String, guess: String): Int {
+    val firstResult = secret.filter { it in guess }.length
+    val secondResult = guess.filter { it in secret }.length
+    return minOf(firstResult, secondResult)
+
+}
+
 fun isComplete(secret: String, guess: String): Boolean = secret == guess
 
 fun playGame(secret: String, wordLength: Int, maxAttemptsCount: Int): Unit {
