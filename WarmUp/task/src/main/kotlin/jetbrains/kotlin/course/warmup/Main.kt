@@ -21,7 +21,7 @@ fun countPartialMatches(secret: String, guess: String): Int = TODO("Not implemen
 
 fun countExactMatches(secret: String, guess: String): Int = TODO("Not implemented yet!")
 
-fun isComplete(secret: String, guess: String): Boolean = true
+fun isComplete(secret: String, guess: String): Boolean = secret == guess
 
 fun playGame(secret: String, wordLength: Int, maxAttemptsCount: Int): Unit {
 
@@ -48,4 +48,3 @@ fun main() {
 
     playGame(secret, wordLength, maxAttemptsCount)
 }
-
