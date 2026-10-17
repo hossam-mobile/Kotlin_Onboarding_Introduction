@@ -30,7 +30,7 @@ fun playGame(secret: String, wordLength: Int, maxAttemptsCount: Int): Unit {
         println("Please input your guess. It should be of length $wordLength.")
         val guess = safeReadLine()
         isComplete = isComplete(secret, guess)
-    }while (!isComplete)
+    } while (!isComplete)
 }
 
 fun main() {
@@ -43,5 +43,9 @@ fun main() {
     val gameRules: String = getGameRules(wordLength, maxAttemptsCount, secretExample)
 
     println(gameRules)
+
+    val secret = generateSecret()
+
+    playGame(secret, wordLength, maxAttemptsCount)
 }
 
