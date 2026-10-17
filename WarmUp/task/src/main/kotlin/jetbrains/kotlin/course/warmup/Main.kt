@@ -1,5 +1,7 @@
 package jetbrains.kotlin.course.warmup
 
+import kotlin.math.absoluteValue
+
 // You will use this function later
 fun getGameRules(wordLength: Int, maxAttemptsCount: Int, secretExample: String) =
     "Welcome to the game! $newLineSymbol" +
@@ -17,7 +19,7 @@ fun getGameRules(wordLength: Int, maxAttemptsCount: Int, secretExample: String) 
 
 fun generateSecret() = "ABCD"
 
-fun countPartialMatches(secret: String, guess: String): Int = TODO("Not implemented yet!")
+fun countPartialMatches(secret: String, guess: String): Int = (countExactMatches(secret, guess) - countAllMatches(secret, guess)).absoluteValue
 
 fun countExactMatches(secret: String, guess: String): Int = secret.filterIndexed { index, symbol ->  guess[index] == symbol}.length
 
