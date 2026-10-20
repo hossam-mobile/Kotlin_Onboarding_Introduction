@@ -19,14 +19,6 @@ internal val printRoundResultsMethod = TestMethod(
     "Void",
 )
 
-internal val countExactMatchesMethod = TestMethod(
-    "countExactMatches", TestKotlinType("Int"),
-    listOf(
-        TestVariable("secret", "String"),
-        TestVariable("guess", "String"),
-    )
-)
-
 internal val playGameMethod = TestMethod(
     "playGame",
     TestKotlinType("Unit"),
@@ -36,6 +28,24 @@ internal val playGameMethod = TestMethod(
         TestVariable("maxAttemptsCount", "Int"),
     ),
     "Void",
+)
+
+internal val isLostMethod = TestMethod(
+    "isLost",
+    TestKotlinType("Boolean"),
+    listOf(
+        TestVariable("complete", "Boolean"),
+        TestVariable("attempts", "Int"),
+        TestVariable("maxAttemptsCount", "Int"),
+    ),
+)
+
+internal val countExactMatchesMethod = TestMethod(
+    "countExactMatches", TestKotlinType("Int"),
+    listOf(
+        TestVariable("secret", "String"),
+        TestVariable("guess", "String"),
+    )
 )
 
 internal val countPartialMatchesMethod = TestMethod(

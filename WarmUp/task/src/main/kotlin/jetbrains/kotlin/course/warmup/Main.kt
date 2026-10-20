@@ -48,6 +48,10 @@ fun printRoundResults(secret: String, guess: String) {
     println("Your guess has $exactMatches full matches and $partialMatches partial matches.")
 }
 
+fun isWon(complete: Boolean, attempts: Int, maxAttemptsCount: Int): Boolean {
+    return complete
+}
+
 fun main() {
     // Write your solution here
 

@@ -68,6 +68,25 @@ class Test {
     }
 
     @Test
+    fun testIsLostFunction() {
+        mainClass.checkMethod(mainClazz, isLostMethod)
+    }
+
+    @ParameterizedTest
+    @MethodSource("gameResults")
+    fun testIsLostImplementation(
+        complete: Boolean,
+        attempts: Int,
+        maxAttemptsCount: Int,
+        isWin: Boolean,
+        isLost: Boolean
+    ){
+        val userMethod = mainClass.findMethod(mainClazz, isLostMethod)
+        Assertions.assertEquals(isLost, userMethod.invokeWithArgs(complete, attempts, maxAttemptsCount, clazz = mainClazz),
+            "The function ${isLostMethod.name} must return $isLost for the following arguments: complete: $complete, attempts: $attempts, maxAttemptsCount: $maxAttemptsCount")
+    }
+
+    @Test
     fun testIsWinFunction() {
         mainClass.checkMethod(mainClazz, isWinMethod)
     }
@@ -107,7 +126,7 @@ class Test {
             userMethod.invoke(mainClazz, guess, secret)
             val actualOutput = baos.toString("UTF-8").replaceLineSeparator()
             Assertions.assertEquals(expectedOutput, actualOutput) { errorMessage }
-        } catch(e: InvocationTargetException) {
+        } catch (e: InvocationTargetException) {
             Assertions.assertTrue(false) { errorMessage }
         }
     }
