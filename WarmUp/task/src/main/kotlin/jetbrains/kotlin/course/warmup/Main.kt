@@ -42,6 +42,12 @@ fun playGame(secret: String, wordLength: Int, maxAttemptsCount: Int): Unit {
     } while (!isComplete)
 }
 
+fun printRoundResults(secret: String, guess: String) {
+    val exactMatches = countExactMatches(secret, guess)
+    val partialMatches = countPartialMatches(secret, guess)
+    println("Your guess has $exactMatches full matches and $partialMatches partial matches.")
+}
+
 fun main() {
     // Write your solution here
 
