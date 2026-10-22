@@ -1,6 +1,7 @@
 package jetbrains.kotlin.course.warmup
 
 import kotlin.math.absoluteValue
+import kotlin.math.max
 
 // You will use this function later
 fun getGameRules(wordLength: Int, maxAttemptsCount: Int, secretExample: String) =
@@ -49,7 +50,11 @@ fun printRoundResults(secret: String, guess: String) {
 }
 
 fun isWon(complete: Boolean, attempts: Int, maxAttemptsCount: Int): Boolean {
-    return complete
+    return maxAttemptsCount >= attempts && complete
+}
+
+fun isLost(complete: Boolean, attempts: Int, maxAttemptsCount: Int): Boolean {
+    return maxAttemptsCount <= attempts && complete
 }
 
 fun main() {

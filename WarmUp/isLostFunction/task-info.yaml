@@ -16,5 +16,11 @@ files:
   - name: test/Tests.kt
     visible: false
     learner_created: false
-status: Unchecked
+status: Failed
+feedback:
+  message: "The function isLost must return false for the following arguments: complete:\
+    \ true, attempts: 4, maxAttemptsCount: 4"
+  time: "Tue, 20 Oct 2026 20:47:43 UTC"
+  expected: "false"
+  actual: "true"
 record: -1
